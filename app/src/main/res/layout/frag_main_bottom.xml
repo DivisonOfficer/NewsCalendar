@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="month"
+            type="String"
+            android:value="September"/>
+        <variable
+            name="year"
+            type="String" />
+        <import type="android.content.Context"/>
+        <import type="edu.skku.cs.mysimplecalendar.R"/>
+        <variable
+            name="context"
+            type="Context" />
+        <variable
+            name="showPlan"
+            type="Boolean" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.main.MainActivity">
+
+        <FrameLayout
+            android:id="@+id/bt_showPlan"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:src="@drawable/ic_calendar"
+                app:tint="@{context.getColor(showPlan ? R.color.primary : R.color.onPrimary), default = @color/onPriamry}" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
