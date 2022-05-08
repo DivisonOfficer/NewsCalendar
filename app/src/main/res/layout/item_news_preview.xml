@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="news"
+            type="edu.skku.cs.mysimplecalendar.datamodels.remote.NewsData" />
+
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_plan"
+        android:background="@drawable/btn_planlist_pressed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ic_category"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_oval"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/ibm_plex_sans_light"
+                android:gravity="center_horizontal|top"
+                android:text="@{news.dateString}"
+                android:textColor="@color/secondaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_category"
+                app:layout_constraintStart_toEndOf="@+id/ic_category"
+                app:layout_constraintTop_toTopOf="@+id/ic_category"
+                tools:text="14:00" />
+
+            <ImageView
+                android:id="@+id/bt_expand"
+                android:layout_width="24dp"
+                android:visibility="gone"
+                android:layout_height="24dp"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:src="@drawable/ic_bt_expend"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+                app:layout_constraintStart_toEndOf="@id/tv_title"
+                app:layout_constraintTop_toTopOf="@+id/tv_title" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="19dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/ibm_plex_sans_semibold"
+                android:gravity="top"
+                android:lineSpacingExtra="0sp"
+                android:maxLines="1"
+                android:text="@{news.title}"
+                android:textColor="@color/primaryText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ic_category"
+                app:layout_constraintTop_toBottomOf="@+id/ic_category"
+                tools:text="안드로이드 프로젝트 발표" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="50.48dp"
+                android:fontFamily="@font/ibm_plex_sans_medium"
+                android:gravity="top"
+                android:maxLines="1"
+                android:lineSpacingExtra="0sp"
+                android:text="@{news.description}"
+                android:textColor="@color/secondaryText"
+                android:textSize="12sp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ic_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                tools:text="슬라이드 16쪽부터 시작" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_weight="0"
+            android:id="@+id/iv_thumb"
+            android:visibility="@{news.urlToImage == null ? View.GONE : View.VISIBLE, default =visible}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+        />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

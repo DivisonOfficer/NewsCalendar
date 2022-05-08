@@ -7,9 +7,7 @@
         <variable
             name="timeString"
             type="String" />
-        <variable
-            name="color"
-            type="Integer" />
+
         <variable
             name="title"
             type="String" />
@@ -23,7 +21,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/ic_category"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginStart="14dp"
@@ -31,7 +29,7 @@
             android:src="@drawable/ic_oval"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@{color, default = @color/item1}" />
+           />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,13 +41,13 @@
             android:gravity="center_horizontal|top"
             android:text="@{timeString}"
             android:textColor="@color/secondaryText"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_category"
+            app:layout_constraintStart_toEndOf="@+id/ic_category"
+            app:layout_constraintTop_toTopOf="@+id/ic_category"
             tools:text="14:00" />
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="19dp"
             android:layout_alignParentLeft="true"
@@ -64,8 +62,8 @@
             android:text="@{title}"
             android:textColor="@color/primaryText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/ic_category"
+            app:layout_constraintTop_toBottomOf="@+id/ic_category"
             tools:text="안드로이드 프로젝트 발표" />
 
         <TextView
@@ -83,8 +81,8 @@
             android:textColor="@color/secondaryText"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/text_title"
+            app:layout_constraintStart_toStartOf="@+id/ic_category"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             tools:text="슬라이드 16쪽부터 시작" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

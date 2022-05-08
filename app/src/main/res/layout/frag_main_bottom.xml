@@ -12,6 +12,7 @@
             type="String" />
         <import type="android.content.Context"/>
         <import type="edu.skku.cs.mysimplecalendar.R"/>
+        <import type="android.view.View"/>
         <variable
             name="context"
             type="Context" />
@@ -37,7 +38,16 @@
                 android:layout_gravity="center"
                 android:focusable="false"
                 android:src="@drawable/ic_calendar"
-                app:tint="@{context.getColor(showPlan ? R.color.primary : R.color.onPrimary), default = @color/onPriamry}" />
+                android:visibility="@{showPlan ? View.VISIBLE : View.GONE}"
+                app:tint="@color/primary" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:src="@drawable/ic_calendar"
+                android:visibility="@{showPlan ? View.GONE : View.VISIBLE}"
+                app:tint="@color/onPrimary" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

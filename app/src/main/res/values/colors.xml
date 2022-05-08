@@ -19,4 +19,10 @@
     <color name="item2">#735BF2</color>
     <color name="item3">#0095FF</color>
 
+    <integer-array name="itme_color">
+        <item>@color/item1</item>
+        <item>@color/item2</item>
+        <item>@color/item3</item>
+    </integer-array>
+
 </resources>

@@ -87,18 +87,22 @@ public class HttpRequestUtil implements Runnable {
     private void get(){
 
         if(params.size() > 0) url +="?";
+
         for(int i = 0; i< params.size();i++)
         {
+            if(i>0)  url += "&";
             Pair<String,String> param = params.get(i);
             url += param.first + "=" + param.second;
 
         }
+        Log.d("HttpRequest","Request : get " +url);
 
         Request.Builder builder = new Request.Builder().url(url).get();
         Request request = builder.build();
 
         Response response;
         try {
+
             response = client.newCall(request).execute();
 
             if(response.isSuccessful())
