@@ -102,6 +102,20 @@
                 app:layout_constraintStart_toStartOf="@+id/ic_category"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
                 tools:text="슬라이드 16쪽부터 시작" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/btn_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_link_pressed"
+                android:fontFamily="@font/ibm_plex_sans_medium"
+                android:text="Link"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -113,6 +127,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="8dp"
         />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

@@ -39,10 +39,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         binding.setAdapter(adapter);
         binding.setNewsAdapter(newsAdapter);
+        setLinkClick();
         setOnClick();
         observeData();
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this::setViewSlider);
         viewModel.getDailyNews();
+    }
+
+    private void setLinkClick(){
+        newsAdapter.setLinkClick(news->{
+            openWebView(news.title,news.url);
+        });
     }
 
 

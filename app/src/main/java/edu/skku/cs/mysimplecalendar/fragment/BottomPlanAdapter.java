@@ -19,6 +19,13 @@ import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsData;
 
 public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.ViewHolder> {
 
+    OnLinkClick onclick;
+
+    public void setLinkClick(OnLinkClick onclick)
+    {
+        this.onclick = onclick;
+    }
+
     private ArrayList<NewsData> newsList = new ArrayList<>();
 
     @NonNull
@@ -56,7 +63,12 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
                 binding.tvTitle.setMaxLines(3);
                 binding.tvDescription.setMaxLines(10);
                 binding.getRoot().requestLayout();
+                binding.btnLink.setVisibility(View.VISIBLE);
 
+            });
+
+            binding.btnLink.setOnClickListener(v->{
+                onclick.action(data);
             });
 
         }
@@ -66,5 +78,9 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
     {
         newsList = data;
         notifyItemRangeChanged(0,getItemCount());
+    }
+
+    public interface OnLinkClick{
+        void action(NewsData data);
     }
 }
