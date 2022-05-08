@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/btn_menu_ticket"
+        android:enabled="true"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/menu_calendar"/>
+
+    <item android:id="@+id/btn_menu_news"
+        android:enabled="true"
+        android:icon="@drawable/ic_timer"
+        android:title="@string/menu_newspid"/>
+    <item android:id="@+id/btn_menu_category"
+        android:enabled="true"
+        android:icon="@drawable/ic_category"
+        android:title="@string/menu_category"/>
+    <item android:id="@+id/btn_menu_mypage"
+        android:enabled="true"
+        android:icon="@drawable/ic_mypage"
+        android:title="@string/menu_mypage"/>
+
+</menu>

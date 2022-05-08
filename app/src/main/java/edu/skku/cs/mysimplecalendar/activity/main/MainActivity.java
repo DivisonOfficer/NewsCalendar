@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void setViewSlider(){
         if(modifier != null) return;
         Integer height = Resources.getSystem().getDisplayMetrics().heightPixels;
-        modifier = new SlideModifier(binding.getRoot(),binding.llBottomRv,binding.flSlider,(int) (height * 0.3), binding.getRoot().getHeight() - binding.layoutHead.getHeight());
+        modifier = new SlideModifier(binding.getRoot(),binding.llBottomRv,binding.flSlider,binding.llBottomRv.getHeight(), binding.getRoot().getHeight() - binding.layoutHead.getHeight() - binding.btNav.getHeight());
     }
 
     @Override

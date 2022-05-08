@@ -1,5 +1,7 @@
 package edu.skku.cs.mysimplecalendar.activity.main;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ public class SlideModifier implements View.OnTouchListener {
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         setTouch();
+        initAnimator();
     }
 
     private void setTouch(){
@@ -42,7 +45,7 @@ public class SlideModifier implements View.OnTouchListener {
             Float dis =  prey - motionEvent.getRawY();
             ConstraintLayout.LayoutParams param = (ConstraintLayout.LayoutParams) lView.getLayoutParams();
             param.height = Integer.max(Integer.min((int) (param.height + dis),maxHeight),minHeight);
-            lView.setY(rootView.getHeight() - param.height);
+            //lView.setY(rootView.getHeight() - param.height);
             lView.post(() -> {
                 lView.setLayoutParams(param);
 
@@ -56,10 +59,46 @@ public class SlideModifier implements View.OnTouchListener {
         }
         else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
         {
+            startAnimator();
 
             return true;
         }
 
         return false;
     }
+
+    boolean isOpen = false;
+    ValueAnimator animator = ObjectAnimator.ofFloat(0f,1f);
+
+    private void startAnimator(){
+        if(animator.isRunning()) return;
+        fromHeight = lView.getHeight();
+        if(fromHeight > maxHeight *( 0.3 + (isOpen ? 0.5 : 0))) {
+            isOpen = true;
+            toHeight = maxHeight;
+        }
+        else {
+            isOpen = false;
+            toHeight = minHeight;
+        }
+        animator.start();
+    }
+
+    private void initAnimator(){
+        animator.setDuration(100);
+        animator.addUpdateListener(anim->{
+            updateHeight(anim.getAnimatedFraction());
+        });
+    }
+    Integer fromHeight;
+    Integer toHeight;
+    private void updateHeight(Float ratio){
+        ConstraintLayout.LayoutParams param = (ConstraintLayout.LayoutParams)lView.getLayoutParams();
+        param.height = (int) (fromHeight + (toHeight - fromHeight) * (ratio));
+        lView.post(()->{
+
+           lView.setLayoutParams(param);
+        });
+    }
+
 }
