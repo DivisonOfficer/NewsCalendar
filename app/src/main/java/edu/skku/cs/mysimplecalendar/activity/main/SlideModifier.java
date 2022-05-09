@@ -52,7 +52,7 @@ public class SlideModifier implements View.OnTouchListener {
               //  rootView.requestLayout();
                 //view.requestLayout();
 
-                Log.d("SlideModifer","onTouch" + param.height + "/ " + view.getY());
+                //Log.d("SlideModifer","onTouch" + param.height + "/ " + view.getY());
             });
             prey = motionEvent.getRawY();
             return true;

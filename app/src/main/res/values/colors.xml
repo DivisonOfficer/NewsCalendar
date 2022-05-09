@@ -18,11 +18,26 @@
     <color name="item1">#00B383</color>
     <color name="item2">#735BF2</color>
     <color name="item3">#0095FF</color>
+    <color name="item4">#F7557F</color>
+    <color name="item5">#99C0FF</color>
+    <color name="item6">#CF496C</color>
+    <color name="item7">#FFD700</color>
+    <color name="item8">#9ACD32</color>
+    <color name="item9">#00FA9A</color>
 
-    <integer-array name="itme_color">
+    <integer-array name="item_color">
         <item>@color/item1</item>
         <item>@color/item2</item>
         <item>@color/item3</item>
+        <item>@color/item4</item>
+        <item>@color/item5</item>
+        <item>@color/item6</item>
+        <item>@color/item7</item>
+        <item>@color/item8</item>
+        <item>@color/item9</item>
+
+
+
     </integer-array>
 
 </resources>

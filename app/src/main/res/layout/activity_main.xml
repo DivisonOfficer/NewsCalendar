@@ -115,7 +115,7 @@
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_calendar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:adapter="@{adapter}"
@@ -161,7 +161,7 @@
                     android:layout_height="match_parent"
                     android:adapter="@{newsAdapter}"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager=".utils.ScrollControlLinear" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

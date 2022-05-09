@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding = bind(R.layout.activity_main);
 
+        newsAdapter.setRecyclerView(binding.rvNews);
         binding.setAdapter(adapter);
         binding.setNewsAdapter(newsAdapter);
         setLinkClick();

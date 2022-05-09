@@ -1,5 +1,6 @@
 package edu.skku.cs.mysimplecalendar.fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,19 @@ import java.util.ArrayList;
 import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.databinding.ItemNewsPreviewBinding;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsData;
+import edu.skku.cs.mysimplecalendar.utils.PlanSlideUtil;
 
 public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.ViewHolder> {
 
     OnLinkClick onclick;
+
+    RecyclerView recyclerView;
+
+    public void setRecyclerView(RecyclerView recyclerView)
+    {
+        this.recyclerView = recyclerView;
+    }
+
 
     public void setLinkClick(OnLinkClick onclick)
     {
@@ -55,6 +65,10 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
 
         public void bind(NewsData data)
         {
+            PlanSlideUtil util = new PlanSlideUtil(binding.llPlan,binding.icStore, recyclerView, ()->{
+                Log.d("PlanAdapter","Store");
+            });
+
             binding.setNews(data);
             if(data.urlToImage != null)
                 Glide.with(binding.ivThumb).asDrawable().load(data.urlToImage).transform(new CenterCrop()).into(binding.ivThumb);

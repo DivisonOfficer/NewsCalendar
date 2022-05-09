@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="category"
+            type="String" />
+    </data>
+    <TextView
+        android:id="@+id/bt_chip"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools = "http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_chip_category"
+        android:textColor="@color/btn_text_chip"
+        android:text="@{category}"
+        android:textSize="11sp"
+        android:fontFamily="@font/ibm_plex_sans_semibold"
+        tools:text="사회"
+
+
+        />
+</layout>
+

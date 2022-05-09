@@ -4,16 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/btn_bottom_icon.xml" value="0.1415" />
+        <entry key="app/src/main/res/drawable/btn_chip_category.xml" value="0.463" />
         <entry key="app/src/main/res/drawable/btn_link_pressed.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/btn_planlist_pressed.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/btn_pressed_tint.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/ic_arrow.xml" value="0.1595" />
         <entry key="app/src/main/res/drawable/ic_oval.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/item_button_round.xml" value="0.1595" />
+        <entry key="app/src/main/res/drawable/ll_bottom_dialog.xml" value="0.463" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2670926001764113" />
         <entry key="app/src/main/res/layout/activity_web.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/layout/frag_main_bottom.xml" value="0.33550913838120106" />
         <entry key="app/src/main/res/layout/item_calendar_date.xml" value="0.46271820068359376" />
+        <entry key="app/src/main/res/layout/item_category_chip.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_news_preview.xml" value="0.32152974504249293" />
         <entry key="app/src/main/res/layout/item_plan_preview.xml" value="0.19888488769531248" />
         <entry key="app/src/main/res/layout/item_weekdays.xml" value="0.5" />

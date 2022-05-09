@@ -6,4 +6,17 @@
     <string name="menu_newspid">뉴스피드</string>
     <string name="menu_mypage">마이페이지</string>
     <string name="menu_category">카테고리</string>
+
+
+    <string-array name="default_category">
+        <item>정치</item>
+        <item>사회</item>
+        <item>경제</item>
+        <item>국제</item>
+        <item>스포츠</item>
+        <item>과학</item>
+        <item>연예</item>
+        <item>예술</item>
+        <item>가정</item>
+    </string-array>
 </resources>
