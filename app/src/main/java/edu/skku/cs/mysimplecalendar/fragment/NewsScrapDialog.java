@@ -1,6 +1,7 @@
 package edu.skku.cs.mysimplecalendar.fragment;
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,9 +63,11 @@ public class NewsScrapDialog extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog mDialog = super.onCreateDialog(savedInstanceState);
+
+        Dialog mDialog = new BottomSheetDialog(getContext(),R.style.DialogStyle);
         mDialog.setOnShowListener(dialog->{
           //setCancelable(false);
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(getContext().getColor(android.R.color.transparent)));
           FrameLayout layout = ((FrameLayout)((BottomSheetDialog) dialog).findViewById(com.google.android.material.R.id.design_bottom_sheet));
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);

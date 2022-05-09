@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.338" />
         <entry key="app/src/main/res/drawable/btn_bottom_icon.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/btn_chip_category.xml" value="0.463" />
         <entry key="app/src/main/res/drawable/btn_link_pressed.xml" value="0.1985" />
@@ -11,6 +12,7 @@
         <entry key="app/src/main/res/drawable/btn_primary.xml" value="0.313" />
         <entry key="app/src/main/res/drawable/drawable_toast.xml" value="0.529" />
         <entry key="app/src/main/res/drawable/ic_arrow.xml" value="0.1595" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.338" />
         <entry key="app/src/main/res/drawable/ic_oval.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_oval_small.xml" value="0.313" />
         <entry key="app/src/main/res/drawable/item_button_round.xml" value="0.1595" />
@@ -27,6 +29,8 @@
         <entry key="app/src/main/res/layout/item_plan_preview.xml" value="0.19888488769531248" />
         <entry key="app/src/main/res/layout/item_weekdays.xml" value="0.5" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.13385416666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.338" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.338" />
       </map>
     </option>
   </component>

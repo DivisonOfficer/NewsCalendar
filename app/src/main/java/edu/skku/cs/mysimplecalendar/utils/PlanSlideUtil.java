@@ -77,7 +77,7 @@ public class PlanSlideUtil {
                     {
                         return ll.performClick();
                     }
-                    if(fromX >= maxWidth)
+                    if(fromX >= icon.getWidth() - 10)
                     {
                         listener.action();
                         return true;

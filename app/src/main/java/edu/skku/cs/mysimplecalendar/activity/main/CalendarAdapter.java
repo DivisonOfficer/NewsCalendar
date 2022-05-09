@@ -97,6 +97,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     }
     public void setMonth(Integer month){
         this.month = month;
+        this.currentDate = -10;
         setCalendar();
     }
     public void setCurrentDate(Integer date)

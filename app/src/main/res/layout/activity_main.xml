@@ -176,7 +176,7 @@
             android:background="@color/appBackground"
             android:elevation="10dp"
             app:labelVisibilityMode="labeled"
-            app:itemIconSize="24dp"
+            app:itemIconSize="20dp"
             android:foregroundGravity="center_vertical"
             app:itemTextColor="@color/btn_main_bottom"
             app:itemBackground="@color/appBackground"
