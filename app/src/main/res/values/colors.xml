@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="primary">#735BF2</color>
+    <color name="primary_pressed">#6A5ACD</color>
     <color name="onPrimary">#8F9BB3</color>
     <color name="secondary">#EDF1F7</color>
     <color name="appBackground">#FFFFFF</color>

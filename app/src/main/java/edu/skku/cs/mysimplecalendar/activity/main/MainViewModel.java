@@ -38,9 +38,33 @@ public class MainViewModel extends ViewModel {
         return _newsList;
     }
 
+    private final MutableLiveData<ArrayList<NewsData>> _scrapList = new MutableLiveData<>(new ArrayList<>());
+
+    public LiveData<ArrayList<NewsData>> scrapList(){
+        return _scrapList;
+    }
+
     public void setCurrentDay(Integer day)
     {
         _currentDay.setValue(day);
+    }
+
+
+
+
+    private NewsData dataOnScrap;
+
+    public void setDataOnScrap(NewsData data)
+    {
+        this.dataOnScrap = data;
+    }
+
+    public void scrapWithCategory(String category)
+    {
+        dataOnScrap.localCategory = category;
+        ArrayList<NewsData> list = scrapList().getValue();
+        list.add(dataOnScrap);
+        _scrapList.setValue(list);
     }
 
 

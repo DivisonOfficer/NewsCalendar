@@ -1,6 +1,8 @@
 package edu.skku.cs.mysimplecalendar.activity;
 
 import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,9 @@ import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.activity.webview.WebActivity;
+import edu.skku.cs.mysimplecalendar.databinding.ItemCustomToastBinding;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -19,7 +23,11 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void toast(String msg)
     {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast toast = new Toast(this);
+        ItemCustomToastBinding inner = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_custom_toast, null,false);
+        inner.setText(msg);
+        toast.setView(inner.getRoot());
+        toast.show();
     }
 
 

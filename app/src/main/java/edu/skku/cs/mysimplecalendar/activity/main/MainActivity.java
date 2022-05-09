@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.transition.Slide;
+import android.util.Pair;
 import android.view.View;
+
+import java.util.ArrayList;
 
 import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.activity.BaseActivity;
 import edu.skku.cs.mysimplecalendar.databinding.ActivityMainBinding;
 import edu.skku.cs.mysimplecalendar.fragment.BottomPlanAdapter;
+import edu.skku.cs.mysimplecalendar.fragment.NewsScrapDialog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -31,6 +35,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * APP LIFECYCLE
      *************************************************************************/
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +46,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         newsAdapter.setRecyclerView(binding.rvNews);
         binding.setAdapter(adapter);
         binding.setNewsAdapter(newsAdapter);
+        newsAdapter.setScrapListener(data->{
+            viewModel.setDataOnScrap(data);
+            showScrap();
+        });
         setLinkClick();
         setOnClick();
+        setOnScrap();
         observeData();
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this::setViewSlider);
         viewModel.getDailyNews();
@@ -60,6 +71,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    private void setOnScrap(){
+        scrapDialog.onScrap = category->{
+            toast(getString(R.string.success_scrap));
+            viewModel.scrapWithCategory(category);
+        };
+    }
 
     private void setOnClick(){
         binding.btMonthNext.setOnClickListener(this);
@@ -82,6 +99,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             newsAdapter.updateList(list);
         });
 
+        viewModel.scrapList().observe(this,list->{
+
+            ArrayList<Pair<Integer,String>> ovals = new ArrayList<>();
+            list.stream().map(data-> new Pair<Integer,String>(data.day(), data.localCategory)).forEach(ovals::add);
+            adapter.setOvals(ovals);
+        });
+
     }
     SlideModifier modifier;
 
@@ -102,4 +126,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             viewModel.previousMonth();
         }
     }
+
+    private void showScrap(){
+        scrapDialog.show(getSupportFragmentManager(),scrapDialog.getTag());
+    }
+
+    NewsScrapDialog scrapDialog = new NewsScrapDialog();
 }

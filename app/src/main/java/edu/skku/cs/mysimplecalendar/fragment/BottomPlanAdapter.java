@@ -30,6 +30,12 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
         this.recyclerView = recyclerView;
     }
 
+    public void setScrapListener(Scrap listener)
+    {
+        this.listener = listener;
+    }
+    Scrap listener;
+
 
     public void setLinkClick(OnLinkClick onclick)
     {
@@ -67,6 +73,7 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
         {
             PlanSlideUtil util = new PlanSlideUtil(binding.llPlan,binding.icStore, recyclerView, ()->{
                 Log.d("PlanAdapter","Store");
+                listener.action(data);
             });
 
             binding.setNews(data);
@@ -95,6 +102,10 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
     }
 
     public interface OnLinkClick{
+        void action(NewsData data);
+    }
+
+    public interface Scrap{
         void action(NewsData data);
     }
 }

@@ -2,6 +2,7 @@ package edu.skku.cs.mysimplecalendar.activity.main;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import edu.skku.cs.mysimplecalendar.R;
@@ -26,6 +28,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     {
         this.onClick = onClick;
     }
+
+    ArrayList<Pair<Integer,String>> ovals = new ArrayList<>();
 
 
     @NonNull
@@ -60,8 +64,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         public void bind(Integer day){
             binding.setDate(day);
+            binding.setAdapter(null);
             if(day>0)
             {
+                GridIconAdapter adapter = new GridIconAdapter();
+                ArrayList<String> cats = new ArrayList<>();
+                ovals.stream().filter(pair-> pair.first.equals(day)).map(par-> par.second).forEach(cats::add);
+                adapter.ovals = cats;
+                binding.setAdapter(adapter);
+
                 Log.d("CalendarAdapter","day" + day);
 
                 if(day.equals(currentDate)) binding.setCurrentDate(true);
@@ -73,6 +84,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             else binding.getRoot().setOnClickListener(null);
         }
 
+    }
+    public void setOvals( ArrayList<Pair<Integer,String>> ovals )
+    {
+        this.ovals = ovals;
+        notifyItemRangeChanged(0,42);
     }
 
     public void setYear(Integer year)

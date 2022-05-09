@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.databinding.ItemCategoryChipBinding;
+import edu.skku.cs.mysimplecalendar.fragment.NewsScrapDialog;
 
 public class CategoryChip {
 
@@ -20,9 +21,11 @@ public class CategoryChip {
 
     private ChipGroup chipGroup;
     private Context context;
-    public CategoryChip(Context context, ChipGroup chip)
+
+    public CategoryChip(Context context, ChipGroup chip, NewsScrapDialog.CategoryPointer pointer)
     {
         this.chipGroup = chip;
+        this.pointer = pointer;
         this.context = context;
 
         addDefaultCategory();
@@ -38,7 +41,7 @@ public class CategoryChip {
         }
     }
 
-    private String currentChip = "";
+    private NewsScrapDialog.CategoryPointer pointer;
 
     private ArrayList<ItemCategoryChipBinding> chips = new ArrayList<>();
 
@@ -49,14 +52,15 @@ public class CategoryChip {
         binding.btChip.setBackgroundTintList(ColorStateList.valueOf(color));
 
         binding.setCategory(text);
+        binding.btChip.setSelected(false);
         binding.getRoot().setOnClickListener(v->{
-            if(currentChip.equals(text))
+            if(pointer.category.equals(text))
             {
-                currentChip = "";
+                pointer.category = "";
                 binding.btChip.setSelected(false);
             }
             else{
-                currentChip = text;
+                pointer.category = text;
                 chips.forEach(bind->{
                     bind.btChip.setSelected(false);
                 });
