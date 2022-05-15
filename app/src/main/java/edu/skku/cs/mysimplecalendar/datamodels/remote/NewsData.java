@@ -15,6 +15,7 @@ public class NewsData{
     public String urlToImage;
     public String publishedAt;
     public String content;
+
     public Integer color;
 
     public String localCategory;

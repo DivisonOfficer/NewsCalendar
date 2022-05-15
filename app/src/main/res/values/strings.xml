@@ -8,6 +8,12 @@
     <string name="menu_category">카테고리</string>
 
     <string name="success_scrap">기사를 스크랩했습니다</string>
+    <string name="str_username">Username</string>
+    <string name="str_password">Password</string>
+    <string name="str_password_confirm">Password Confirm</string>
+    <string name="str_btn_login">로그인</string>
+    <string name="str_btn_register">회원가입</string>
+    <string name="str_btn_confirm">완료</string>
 
     <string-array name="default_category">
         <item>정치</item>

@@ -1,8 +1,10 @@
 package edu.skku.cs.mysimplecalendar.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,5 +41,9 @@ public class BaseActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+    }
+
+    protected InputMethodManager imm(){
+        return (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
     }
 }
