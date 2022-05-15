@@ -70,7 +70,14 @@ public class HttpRequestUtil implements Runnable {
 
     private void post(){
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),new Gson().toJson(postBody));
-        Request.Builder builder = new Request.Builder().url(url).post(requestBody);
+
+        Request.Builder builder;
+        try{
+            builder = new Request.Builder().url(url).post(requestBody);
+        }catch(Exception e)
+        {
+            throw e;
+        }
         Request request = builder.build();
         Response response;
         try {
