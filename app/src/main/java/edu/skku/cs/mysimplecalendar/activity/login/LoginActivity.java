@@ -31,20 +31,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         bind.btnLogin.setOnClickListener(this);
         bind.btnRegister.setOnClickListener(this);
         observeData();
+        LoginViewModel.BACKEND_URL = getString(R.string.str_url_backend);
     }
 
     @Override
     public void onClick(View view) {
         if(view == bind.btnLogin)
         {
+            clearFocus();
             viewModel.login(bind.etUsername.getText().toString(), bind.etPassword.getText().toString());
         }
         else if(view == bind.btnConfirm)
         {
+            clearFocus();
             viewModel.registerUser(bind.etUsername.getText().toString(), bind.etPasswordRegister.getText().toString(), bind.etPasswordConfirm.getText().toString());
         }
         else if(view == bind.btnRegister)
         {
+            clearFocus();
             viewModel.registerMode();
         }
     }
@@ -108,6 +112,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
 
         });
+    }
+
+    private void clearFocus()
+    {
+        imm().hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        getCurrentFocus().clearFocus();
     }
 
 

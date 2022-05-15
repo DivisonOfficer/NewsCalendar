@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 
+import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.StatusBody;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.UserBody;
 import edu.skku.cs.mysimplecalendar.utils.HttpRequestUtil;
@@ -48,6 +49,8 @@ public class LoginViewModel extends ViewModel {
                     _messageCode.setValue(CODE_FAILED_LOGIN);
                 }
 
+            }).setOnFailedListener(code ->{
+                _messageCode.setValue(CODE_FAILED_LOGIN);
             }).request();
         }
         catch(Exception e)
@@ -78,6 +81,8 @@ public class LoginViewModel extends ViewModel {
                     _messageCode.setValue(CODE_FAILED_REGISTER);
                 }
 
+            }).setOnFailedListener(code ->{
+                _messageCode.setValue(CODE_FAILED_REGISTER);
             }).request();
         }
          catch(Exception e)
@@ -112,5 +117,7 @@ public class LoginViewModel extends ViewModel {
     public final static Integer CODE_SUCCESS_LOGIN = 4;
     public final static Integer CODE_SUCCESS_REGISTER = 5;
 
-    public final static String BACKEND_URL = "";
+    public static String BACKEND_URL;
+
+    // userId = admin , passWd = 1234
 }

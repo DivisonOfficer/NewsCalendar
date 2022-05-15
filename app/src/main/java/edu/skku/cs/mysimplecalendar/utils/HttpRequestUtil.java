@@ -48,6 +48,11 @@ public class HttpRequestUtil implements Runnable {
         this.onSuccessListener = listener;
         return this;
     }
+    public HttpRequestUtil setOnFailedListener(OnFailedListener listener)
+    {
+        this.onFailedListener = listener;
+        return this;
+    }
 
 
     public void request() {
@@ -58,6 +63,7 @@ public class HttpRequestUtil implements Runnable {
         if(client == null) client = new OkHttpClient();
     }
     OnSuccessListener onSuccessListener = null;
+    OnFailedListener onFailedListener = null;
 
 
 
@@ -81,10 +87,14 @@ public class HttpRequestUtil implements Runnable {
         Request request = builder.build();
         Response response;
         try {
+            Log.d("HTTPRequestUtil","POST : "+url);
             response = client.newCall(request).execute();
             if(response.isSuccessful())
             {
                 runOnSuccess(response);
+            }
+            else{
+                if(onFailedListener != null) runOnFailed(response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,6 +128,7 @@ public class HttpRequestUtil implements Runnable {
             }
             else{
                 Log.d("HttpRequest","Failed." + response.code());
+                if(onFailedListener != null) runOnFailed(response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,8 +139,16 @@ public class HttpRequestUtil implements Runnable {
         new Handler(Looper.getMainLooper()).post(() -> onSuccessListener.onSuccess(json));
     }
 
+    private void runOnFailed(Integer code)
+    {
+        new Handler(Looper.getMainLooper()).post(()->onFailedListener.onFailed(code));
+    }
+
     public interface OnSuccessListener{
         void onSuccess(String response);
+    }
+    public interface OnFailedListener{
+        void onFailed(Integer code);
     }
 
 
