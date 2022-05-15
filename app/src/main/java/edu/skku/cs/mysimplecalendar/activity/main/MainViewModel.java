@@ -1,5 +1,7 @@
 package edu.skku.cs.mysimplecalendar.activity.main;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,7 +10,10 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import edu.skku.cs.mysimplecalendar.activity.login.LoginActivity;
+import edu.skku.cs.mysimplecalendar.activity.login.LoginViewModel;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsData;
+import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsPostBody;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsResponse;
 import edu.skku.cs.mysimplecalendar.utils.HttpRequestUtil;
 
@@ -98,9 +103,18 @@ public class MainViewModel extends ViewModel {
         new HttpRequestUtil().setURL(newsUrl + topHeadLine).addParameter("apiKey",newsApiKey).addParameter("country","kr").setOnSuccessListener(
                 body -> {
                     NewsResponse response = new Gson().fromJson(body,NewsResponse.class);
+
                     _newsList.setValue(response.articles);
+                    postNews(response.articles);
                 }
         ).request();
+    }
+
+    public void postNews(ArrayList<NewsData> news)
+    {
+        new HttpRequestUtil().setURL(LoginViewModel.BACKEND_URL + "news/post").setPostBody(new NewsPostBody(news)).setOnSuccessListener((response)->{
+            Log.d("MainViewModel","Collect " + news.size() + "data to backedn");
+        }).enableDebug().request();
     }
 
 
