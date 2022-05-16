@@ -62,7 +62,7 @@ public class MainViewModel extends ViewModel {
     {
         _currentDay.setValue(day);
         ArrayList<NewsData> list = new ArrayList<>();
-        _scrapList.getValue().stream().filter(newsData -> {return newsData.day() == day && newsData.month() == currentMonth().getValue() && newsData.year() == currentYear().getValue();}).forEach(list::add);
+        _scrapList.getValue().stream().filter(newsData -> {return newsData.day().equals(day) && newsData.month().equals(currentMonth().getValue()) && newsData.year().equals(currentYear().getValue());}).forEach(list::add);
         _scrapListByDate.setValue(list);
     }
 
@@ -98,7 +98,12 @@ public class MainViewModel extends ViewModel {
     public void filterScrapList()
     {
         ArrayList<NewsData> list = new ArrayList<>();
-        _scrapList.getValue().stream().filter(newsData -> {return newsData.year() == currentYear().getValue() && newsData.month() == currentMonth().getValue();}).filter(list::add);
+        Log.d("MainViewModel","All scraps : " + _scrapList.getValue().size());
+
+        _scrapList.getValue().forEach(data->{
+            Log.d("MainViewModel",data.year() + "/" + data.month());
+            if(data.year().equals(currentYear().getValue()) && data.month().equals(currentMonth().getValue())) list.add(data);
+        });
         _scrapListByMonth.setValue(list);
     }
 

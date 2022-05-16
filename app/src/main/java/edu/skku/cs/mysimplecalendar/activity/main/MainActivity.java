@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.transition.Slide;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
@@ -27,6 +28,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     CalendarAdapter adapter = new CalendarAdapter(this::setCurrentDate);
 
     BottomPlanAdapter newsAdapter = new BottomPlanAdapter();
+
+    BottomPlanAdapter scrapAdapter = new BottomPlanAdapter();
 
 
 
@@ -51,6 +54,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             viewModel.setDataOnScrap(data);
             showScrap();
         });
+        scrapAdapter.setRecyclerView(binding.rvNews);
+        binding.setScrapAdapter(scrapAdapter);
         binding.setLifecycleOwner(this);
         binding.setViewmodel(viewModel);
         setLinkClick();
@@ -120,12 +125,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             viewModel.filterScrapList();
         });
         viewModel.scrapListByMonth().observe(this,list->{
-
+            Log.d("MainActivity","Scrapped dat " + list.size());
             ArrayList<Pair<Integer,String>> ovals = new ArrayList<>();
             list.stream().map(data-> new Pair<Integer,String>(data.day(), data.localCategory)).forEach(ovals::add);
             adapter.setOvals(ovals);
         });
-
+        viewModel.scrapListByDate().observe(this,list->{
+           scrapAdapter.updateList(list);
+        });
     }
     SlideModifier modifier;
 
