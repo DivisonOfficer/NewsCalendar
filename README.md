@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/badge/CompiledSdk-31-f39f37">
 <img src="https://img.shields.io/badge/TargetSdk-31-f39f37">
 <img src="https://img.shields.io/badge/MinimumSdk-26-f39f37">
-<img src="https://img.shields.io/badge/Windows-10-4791FF"> <img src="https://img.shields.io/badge/AndroidStudio-Bumblebee-e9b033">
+<img src="https://img.shields.io/badge/MacOs-monterey-a030b0"> <img src="https://img.shields.io/badge/AndroidStudio-Bumblebee-e9b033">
 <img src="https://img.shields.io/badge/JAVA-C82025">
 
 
