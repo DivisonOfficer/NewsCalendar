@@ -96,14 +96,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void observeData(){
         viewModel.messageCode().observe(this, code ->{
-            if (code == LoginViewModel.CODE_USERNAME_NOT_ACCEPT) {
+            if (code.equals(LoginViewModel.CODE_USERNAME_NOT_ACCEPT)) {
                 toast("아이디를 다시 입력해주세요");
             }
-            else if(code == LoginViewModel.CODE_PASSWORD_WRONG)
+            else if(code.equals(LoginViewModel.CODE_PASSWORD_WRONG))
             {
                 toast("비밀번호를 다시 입력해주세요");
             }
-            else if(code == LoginViewModel.CODE_SUCCESS_LOGIN)
+            else if(code.equals(LoginViewModel.CODE_SUCCESS_LOGIN))
             {
                 toast("로그인 성공");
                 Intent intent = new Intent(this, MainActivity.class);
@@ -111,7 +111,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
-            else if(code == LoginViewModel.CODE_SUCCESS_REGISTER)
+            else if(code.equals(LoginViewModel.CODE_SUCCESS_REGISTER))
             {
                 toast("회원가입 성공");
                 Intent intent = new Intent(this, MainActivity.class);
@@ -119,11 +119,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
-            else if(code == LoginViewModel.CODE_FAILED_LOGIN)
+            else if(code.equals(LoginViewModel.CODE_FAILED_LOGIN))
             {
                 toast("로그인 실패");
             }
-            else if(code == LoginViewModel.CODE_FAILED_REGISTER)
+            else if(code.equals(LoginViewModel.CODE_FAILED_REGISTER))
             {
                 toast("회원가입 실패");
             }

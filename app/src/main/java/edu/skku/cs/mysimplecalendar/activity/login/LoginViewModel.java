@@ -56,7 +56,7 @@ public class LoginViewModel extends ViewModel {
 
             }).setOnFailedListener(code ->{
                 _messageCode.setValue(CODE_FAILED_LOGIN);
-            }).request();
+            }).enableDebug().request();
         }
         catch(Exception e)
         {
@@ -90,7 +90,7 @@ public class LoginViewModel extends ViewModel {
 
             }).setOnFailedListener(code ->{
                 _messageCode.setValue(CODE_FAILED_REGISTER);
-            }).request();
+            }).enableDebug().request();
         }
          catch(Exception e)
         {

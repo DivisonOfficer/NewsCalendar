@@ -62,8 +62,8 @@ public class MainViewModel extends ViewModel {
     {
         _currentDay.setValue(day);
         ArrayList<NewsData> list = new ArrayList<>();
-        _scrapList.getValue().stream().filter(newsData -> {return newsData.day().equals(day) && newsData.month().equals(currentMonth().getValue()) && newsData.year().equals(currentYear().getValue());}).forEach(list::add);
-        _scrapListByDate.setValue(list);
+        filterScrapListByDate();
+        getNewsByDate();
     }
 
     private final MutableLiveData<Integer> _layoutMode = new MutableLiveData<>(LAYOUT_SCRAP);
@@ -77,6 +77,10 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<NewsData>> _scrapListByDate = new MutableLiveData<>();
 
     public LiveData<ArrayList<NewsData>> scrapListByDate(){ return _scrapListByDate; }
+
+    private final MutableLiveData<ArrayList<NewsData>> _oldNews = new MutableLiveData<>();
+
+    public LiveData<ArrayList<NewsData>> oldNews(){return _oldNews;}
 
 
     private NewsData dataOnScrap;
@@ -98,13 +102,18 @@ public class MainViewModel extends ViewModel {
     public void filterScrapList()
     {
         ArrayList<NewsData> list = new ArrayList<>();
-        Log.d("MainViewModel","All scraps : " + _scrapList.getValue().size());
 
         _scrapList.getValue().forEach(data->{
             Log.d("MainViewModel",data.year() + "/" + data.month());
             if(data.year().equals(currentYear().getValue()) && data.month().equals(currentMonth().getValue())) list.add(data);
         });
         _scrapListByMonth.setValue(list);
+    }
+
+    public void filterScrapListByDate(){
+        ArrayList<NewsData> list = new ArrayList<>();
+        _scrapList.getValue().stream().filter(newsData -> {return newsData.day().equals(currentDay().getValue()) && newsData.month().equals(currentMonth().getValue()) && newsData.year().equals(currentYear().getValue());}).forEach(list::add);
+        _scrapListByDate.setValue(list);
     }
 
 
@@ -136,7 +145,7 @@ public class MainViewModel extends ViewModel {
     }
 
     public void getDailyNews(){
-        new HttpRequestUtil().setURL(newsUrl + topHeadLine).addParameter("apiKey",newsApiKey).addParameter("country","kr").setOnSuccessListener(
+        new HttpRequestUtil().setURL(newsUrl + topHeadLine).addParameter("apiKey",newsApiKey).addParameter("country","kr").addParameter("pageSize","100").setOnSuccessListener(
                 body -> {
                     NewsResponse response = new Gson().fromJson(body,NewsResponse.class);
 
@@ -158,6 +167,12 @@ public class MainViewModel extends ViewModel {
         NewsScrapBody body = new NewsScrapBody(PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,""),news.url,category);
         new HttpRequestUtil().setURL(LoginViewModel.BACKEND_URL + "news/scrap").setPostBody(body).setOnSuccessListener((response)->{
             _scrapStatus.setValue(1);
+            ArrayList<NewsData> list = scrapList().getValue();
+            news.category = category;
+            list.add(news);
+            _scrapList.setValue(list);
+            filterScrapList();
+            filterScrapListByDate();
         }).enableDebug().request();
     }
 
@@ -173,6 +188,8 @@ public class MainViewModel extends ViewModel {
             Type listType = new TypeToken<List<NewsData>>() {}.getType();
             ArrayList<NewsData> list = new Gson().fromJson(response,listType);
             _scrapList.setValue(list);
+            filterScrapList();
+
         }).request();
     }
     public void deleteScrap(NewsData news)
@@ -189,10 +206,24 @@ public class MainViewModel extends ViewModel {
         }).enableDebug().request();
     }
 
+    public void getNewsByDate()
+    {
+        String from = currentYear().getValue()+ "-"+currentMonth().getValue()+"-"+currentDay().getValue();
+        new HttpRequestUtil().setURL(newsUrl + everythingNews).addParameter("apiKey",newsApiKey).addParameter("q","이").addParameter("pageSize","100").addParameter("from",from).addParameter("to",from).setOnSuccessListener(
+                body -> {
+                    NewsResponse response = new Gson().fromJson(body,NewsResponse.class);
 
-    public static String newsUrl = "https://newsapi.org/";
-    public static String newsApiKey = "448661a0dc1e4bc1bbd84f215553424b";
-    public static String topHeadLine = "v2/top-headlines";
+                    _oldNews.setValue(response.articles);
+                    postNews(response.articles);
+                }
+        ).request();
+    }
+
+
+    public final static String newsUrl = "https://newsapi.org/";
+    public final static String newsApiKey = "448661a0dc1e4bc1bbd84f215553424b";
+    public final static String topHeadLine = "v2/top-headlines";
+    public final static String everythingNews = "v2/everything";
 
     public final static Integer LAYOUT_SCRAP = 0;
     public final static Integer LAYOUT_HEADLINE = 1;

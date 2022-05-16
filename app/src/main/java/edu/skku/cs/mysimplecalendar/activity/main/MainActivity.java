@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.activity.BaseActivity;
 import edu.skku.cs.mysimplecalendar.databinding.ActivityMainBinding;
+import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsData;
 import edu.skku.cs.mysimplecalendar.fragment.BottomPlanAdapter;
 import edu.skku.cs.mysimplecalendar.fragment.NewsScrapDialog;
 import edu.skku.cs.mysimplecalendar.utils.PreferenceUtil;
@@ -30,6 +31,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     BottomPlanAdapter newsAdapter = new BottomPlanAdapter();
 
     BottomPlanAdapter scrapAdapter = new BottomPlanAdapter();
+
+    BottomPlanAdapter oldNewsAdapter = new BottomPlanAdapter();
 
 
 
@@ -52,7 +55,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         binding.setNewsAdapter(newsAdapter);
 
         scrapAdapter.setRecyclerView(binding.rvNews);
+        oldNewsAdapter.setRecyclerView(binding.rvNews);
         binding.setScrapAdapter(scrapAdapter);
+        binding.setOldNewsAdapter(oldNewsAdapter);
         binding.setLifecycleOwner(this);
         binding.setViewmodel(viewModel);
         setSlide();
@@ -72,6 +77,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             viewModel.setDataOnScrap(data);
             showScrap();
         });
+        oldNewsAdapter.setScrapListener(data->{
+            viewModel.setDataOnScrap(data);
+            showScrap();
+        });
         scrapAdapter.setScrapListener(viewModel::deleteScrap);
     }
 
@@ -80,6 +89,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             openWebView(news.title,news.url);
         });
         scrapAdapter.setLinkClick(news->{
+            openWebView(news.title,news.url);
+        });
+        oldNewsAdapter.setLinkClick(news->{
             openWebView(news.title,news.url);
         });
     }
@@ -141,6 +153,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         viewModel.scrapListByDate().observe(this,list->{
            scrapAdapter.updateList(list);
         });
+        viewModel.oldNews().observe(this, oldNewsAdapter::updateList);
     }
     SlideModifier modifier;
 
@@ -168,4 +181,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     NewsScrapDialog scrapDialog = new NewsScrapDialog();
+
+    private void onChanged(ArrayList<NewsData> list) {
+        oldNewsAdapter.updateList(list);
+    }
 }
