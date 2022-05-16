@@ -3,13 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="month"
             type="String"
             android:value="September"/>
         <variable
+            name="year"
+            type="Integer" />
+        <import type="edu.skku.cs.mysimplecalendar.activity.main.MainViewModel"/>
+        <variable
             name="viewmodel"
-            type="edu.skku.cs.mysimplecalendar.activity.main.MainViewModel" />
+            type="MainViewModel" />
         <variable
             name="newsAdapter"
             type="androidx.recyclerview.widget.RecyclerView.Adapter"/>
@@ -81,7 +86,7 @@
             </FrameLayout>
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
@@ -102,12 +107,12 @@
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="top"
                 android:lineSpacingExtra="2sp"
-                android:text="@{viewmodel.currentYear().toString(), default = 2021}"
+                android:text="@{year.toString(), default = 2021}"
                 android:textColor="@color/secondaryText"
                 android:translationY="-0.84sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_month" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
@@ -167,13 +172,48 @@
                     android:id="@+id/rv_news"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:adapter="@{newsAdapter}"
+                    android:adapter="@{viewmodel.layoutMode() == MainViewModel.LAYOUT_NEWS_CALENDAR ? oldNewsAdapter : scrapAdapter}"
                     android:orientation="vertical"
                     app:layoutManager=".utils.ScrollControlLinear" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_headlines"
+            android:translationZ="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="0dp"
+            android:background="@color/appBackground"
+            android:visibility="@{viewmodel.layoutMode() == MainViewModel.LAYOUT_HEADLINE ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/bt_nav"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/tv_headlines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/str_today_headline"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_headlines"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:adapter="@{newsAdapter}"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layoutManager=".utils.ScrollControlLinear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_headlines" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bt_nav"
             android:layout_width="match_parent"

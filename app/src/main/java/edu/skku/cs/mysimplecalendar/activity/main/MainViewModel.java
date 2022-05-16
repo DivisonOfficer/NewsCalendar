@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.skku.cs.mysimplecalendar.activity.login.LoginActivity;
 import edu.skku.cs.mysimplecalendar.activity.login.LoginViewModel;
@@ -51,16 +54,29 @@ public class MainViewModel extends ViewModel {
         return _scrapList;
     }
 
+    private final MutableLiveData<ArrayList<NewsData>> _scrapListByMonth = new MutableLiveData<>();
+
+    public LiveData<ArrayList<NewsData>> scrapListByMonth(){return _scrapListByMonth;}
+
     public void setCurrentDay(Integer day)
     {
         _currentDay.setValue(day);
+        ArrayList<NewsData> list = new ArrayList<>();
+        _scrapList.getValue().stream().filter(newsData -> {return newsData.day() == day && newsData.month() == currentMonth().getValue() && newsData.year() == currentYear().getValue();}).forEach(list::add);
+        _scrapListByDate.setValue(list);
     }
 
     private final MutableLiveData<Integer> _layoutMode = new MutableLiveData<>(LAYOUT_SCRAP);
 
     public LiveData<Integer> layoutMode(){ return _layoutMode;}
 
+    private final MutableLiveData<Integer> _scrapStatus = new MutableLiveData<>(0);
 
+    public LiveData<Integer> scrapStatus(){ return _scrapStatus; }
+
+    private final MutableLiveData<ArrayList<NewsData>> _scrapListByDate = new MutableLiveData<>();
+
+    public LiveData<ArrayList<NewsData>> scrapListByDate(){ return _scrapListByDate; }
 
 
     private NewsData dataOnScrap;
@@ -72,12 +88,19 @@ public class MainViewModel extends ViewModel {
 
     public void scrapWithCategory(String category)
     {
-        dataOnScrap.localCategory = category;
-        ArrayList<NewsData> list = scrapList().getValue();
-        list.add(dataOnScrap);
-        _scrapList.setValue(list);
+        //dataOnScrap.localCategory = category;
+        //ArrayList<NewsData> list = scrapList().getValue();
+        //list.add(dataOnScrap);
+        //_scrapList.setValue(list);
+        scrapNews(dataOnScrap,category);
     }
 
+    public void filterScrapList()
+    {
+        ArrayList<NewsData> list = new ArrayList<>();
+        _scrapList.getValue().stream().filter(newsData -> {return newsData.year() == currentYear().getValue() && newsData.month() == currentMonth().getValue();}).filter(list::add);
+        _scrapListByMonth.setValue(list);
+    }
 
 
     public void nextMonth()
@@ -92,6 +115,7 @@ public class MainViewModel extends ViewModel {
 
         _currentMonth.setValue(month);
         _currentDay.setValue(0);
+        filterScrapList();
     }
     public void previousMonth(){
         Integer month = currentMonth().getValue();
@@ -103,6 +127,7 @@ public class MainViewModel extends ViewModel {
         }
         _currentMonth.setValue(month);
         _currentDay.setValue(0);
+        filterScrapList();
     }
 
     public void getDailyNews(){
@@ -126,6 +151,24 @@ public class MainViewModel extends ViewModel {
     public void scrapNews(NewsData news, String category)
     {
         NewsScrapBody body = new NewsScrapBody(PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,""),news.url,category);
+        new HttpRequestUtil().setURL(LoginViewModel.BACKEND_URL + "news/scrap").setPostBody(body).setOnSuccessListener((response)->{
+            _scrapStatus.setValue(1);
+        }).enableDebug().request();
+    }
+
+    public void setCurrentLayout(Integer mode)
+    {
+        _layoutMode.setValue(mode);
+        if(mode == LAYOUT_SCRAP)
+            getScrapData();
+    }
+
+    public void getScrapData(){
+        new HttpRequestUtil().setURL(LoginViewModel.BACKEND_URL+"news/scrap/get").addParameter("userId",PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,"")).enableDebug().setOnSuccessListener(response -> {
+            Type listType = new TypeToken<List<NewsData>>() {}.getType();
+            ArrayList<NewsData> list = new Gson().fromJson(response,listType);
+            _scrapList.setValue(list);
+        }).request();
     }
 
 

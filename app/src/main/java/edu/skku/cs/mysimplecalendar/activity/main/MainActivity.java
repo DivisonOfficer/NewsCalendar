@@ -16,6 +16,7 @@ import edu.skku.cs.mysimplecalendar.activity.BaseActivity;
 import edu.skku.cs.mysimplecalendar.databinding.ActivityMainBinding;
 import edu.skku.cs.mysimplecalendar.fragment.BottomPlanAdapter;
 import edu.skku.cs.mysimplecalendar.fragment.NewsScrapDialog;
+import edu.skku.cs.mysimplecalendar.utils.PreferenceUtil;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -43,20 +44,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding = bind(R.layout.activity_main);
 
-        newsAdapter.setRecyclerView(binding.rvNews);
+        newsAdapter.setRecyclerView(binding.rvHeadlines);
         binding.setAdapter(adapter);
         binding.setNewsAdapter(newsAdapter);
         newsAdapter.setScrapListener(data->{
             viewModel.setDataOnScrap(data);
             showScrap();
         });
+        binding.setLifecycleOwner(this);
+        binding.setViewmodel(viewModel);
         setLinkClick();
         setOnClick();
         setOnScrap();
         observeData();
+        setBottomClick();
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this::setViewSlider);
         viewModel.getDailyNews();
+
     }
+
+
 
     private void setLinkClick(){
         newsAdapter.setLinkClick(news->{
@@ -83,6 +90,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         binding.btMonthPrevious.setOnClickListener(this);
     }
 
+    private void setBottomClick(){
+        binding.btNav.setOnItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.btn_menu_scrap) viewModel.setCurrentLayout(MainViewModel.LAYOUT_SCRAP);
+            else if(item.getItemId() == R.id.btn_menu_news) viewModel.setCurrentLayout(MainViewModel.LAYOUT_HEADLINE);
+            else if(item.getItemId() == R.id.btn_menu_category) viewModel.setCurrentLayout(MainViewModel.LAYOUT_NEWS_CALENDAR);
+            else if(item.getItemId() == R.id.btn_menu_mypage) viewModel.setCurrentLayout(MainViewModel.LAYOUT_MYPAGE);
+            return  true;
+        });
+    }
+
     private void observeData(){
         viewModel.currentDay().observe(this, day->{
             adapter.setCurrentDate(day);
@@ -91,11 +108,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             adapter.setMonth(month);
             binding.setMonth(getResources().getStringArray(R.array.month_string)[month - 1]);
         });
+        viewModel.currentYear().observe(this,year->{
+            adapter.setYear(year);
+            binding.setYear(year);
+        });
         viewModel.newsList().observe(this,list->{
             newsAdapter.updateList(list);
         });
 
         viewModel.scrapList().observe(this,list->{
+            viewModel.filterScrapList();
+        });
+        viewModel.scrapListByMonth().observe(this,list->{
 
             ArrayList<Pair<Integer,String>> ovals = new ArrayList<>();
             list.stream().map(data-> new Pair<Integer,String>(data.day(), data.localCategory)).forEach(ovals::add);

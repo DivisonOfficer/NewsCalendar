@@ -12,6 +12,7 @@ import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.activity.BaseActivity;
 import edu.skku.cs.mysimplecalendar.activity.main.MainActivity;
 import edu.skku.cs.mysimplecalendar.databinding.ActivityLoginBinding;
+import edu.skku.cs.mysimplecalendar.utils.PreferenceUtil;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private ActivityLoginBinding bind;
@@ -22,6 +23,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceUtil.init(this);
         bind = bind(R.layout.activity_login);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         bind.setLifecycleOwner(this);
@@ -32,6 +34,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         bind.btnRegister.setOnClickListener(this);
         observeData();
         LoginViewModel.BACKEND_URL = getString(R.string.str_url_backend);
+        recoverLogin();
     }
 
     @Override
@@ -53,6 +56,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    private void recoverLogin(){
+        String username = PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,null);
+        String password = PreferenceUtil.instance.getString(PreferenceUtil.USER_PASSWD,null);
+        if(username != null && password != null)
+        {
+            bind.etUsername.setText(username);
+            bind.etPassword.setText(password);
+        }
+    }
 
     private void setEditText(){
         bind.etUsername.setOnEditorActionListener((v, action, event)->{
@@ -116,8 +128,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void clearFocus()
     {
-        imm().hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        getCurrentFocus().clearFocus();
+        try {
+            imm().hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            getCurrentFocus().clearFocus();
+        }
+        catch(Exception e)
+        {
+
+        }
     }
 
 

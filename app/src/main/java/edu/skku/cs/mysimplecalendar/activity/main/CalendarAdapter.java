@@ -18,7 +18,7 @@ import edu.skku.cs.mysimplecalendar.databinding.ItemCalendarDateBinding;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
-    private Integer month, year;
+    private Integer month = 5, year = 2022;
     private Integer startDay = 0;
     private Integer endOfMonth = 0;
     private Integer currentDate = 0;

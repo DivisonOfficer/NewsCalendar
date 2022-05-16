@@ -47,5 +47,29 @@ public class NewsData{
         }
         return 0;
     }
+    public Integer month(){
+        Calendar calendar = Calendar.getInstance();
+        try {
+            Date date = TimeFormat.remoteFormat.parse(publishedAt);
+
+            calendar.setTime(date);
+            return calendar.get(Calendar.MONTH) + 1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public Integer year(){
+        Calendar calendar = Calendar.getInstance();
+        try {
+            Date date = TimeFormat.remoteFormat.parse(publishedAt);
+
+            calendar.setTime(date);
+            return calendar.get(Calendar.YEAR);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 }
