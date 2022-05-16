@@ -56,6 +56,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void recoverLogin(){
         String username = PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,null);
         String password = PreferenceUtil.instance.getString(PreferenceUtil.USER_PASSWD,null);
