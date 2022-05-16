@@ -18,7 +18,7 @@ public class NewsData{
 
     public Integer color;
 
-    public String localCategory;
+    public String category;
 
 
     public String getDateString(){

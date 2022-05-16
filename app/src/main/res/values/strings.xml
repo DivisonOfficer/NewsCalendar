@@ -26,7 +26,8 @@
         <item>과학</item>
         <item>연예</item>
         <item>예술</item>
-        <item>가정</item>
+        <item>라이프</item>
+
     </string-array>
     <string-array name="month_string">
         <item>January</item>

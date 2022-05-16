@@ -1,5 +1,6 @@
 package edu.skku.cs.mysimplecalendar.fragment;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_news_preview,parent,false));
+        return new ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_news_preview,parent,false),parent.getContext());
     }
 
     @Override
@@ -63,10 +64,11 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         ItemNewsPreviewBinding binding;
-        public ViewHolder(@NonNull ItemNewsPreviewBinding binding) {
+        Context context;
+        public ViewHolder(@NonNull ItemNewsPreviewBinding binding, Context context) {
             super(binding.getRoot());
             this.binding = binding;
-
+            this.context = context;
         }
 
         public void bind(NewsData data)
@@ -79,7 +81,16 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
             binding.setNews(data);
             if(data.urlToImage != null)
                 Glide.with(binding.ivThumb).asDrawable().load(data.urlToImage).transform(new CenterCrop()).into(binding.ivThumb);
-
+            if(data.category != null)
+            {
+                String [] categories = context.getResources().getStringArray(R.array.default_category);
+                Integer idx;
+                for(idx = 0 ; idx < categories.length ; idx ++)
+                {
+                    if(categories[idx].equals(data.category)) break;
+                }
+                binding.icCategory.setColorFilter(context.getResources().getIntArray(R.array.item_color)[idx]);
+            }
             binding.llPlan.setOnClickListener(v->{
                 binding.tvTitle.setMaxLines(3);
                 binding.tvDescription.setMaxLines(10);
@@ -98,7 +109,7 @@ public class BottomPlanAdapter extends RecyclerView.Adapter<BottomPlanAdapter.Vi
     public void updateList(ArrayList<NewsData> data)
     {
         newsList = data;
-        notifyItemRangeChanged(0,getItemCount());
+        notifyDataSetChanged();
     }
 
     public interface OnLinkClick{

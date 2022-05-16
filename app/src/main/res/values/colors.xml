@@ -16,6 +16,7 @@
     <color name="primaryText">#222B45</color>
     <color name="secondaryText">#8F9BB3</color>
 
+    <color name="error">#ff3333</color>
     <color name="item1">#00B383</color>
     <color name="item2">#735BF2</color>
     <color name="item3">#0095FF</color>

@@ -175,6 +175,19 @@ public class MainViewModel extends ViewModel {
             _scrapList.setValue(list);
         }).request();
     }
+    public void deleteScrap(NewsData news)
+    {
+        ArrayList<NewsData> list = new ArrayList<>();
+        _scrapList.getValue().stream().filter(data->!data.url.equals(news.url)).forEach(list::add);
+        _scrapList.setValue(list);
+        list = new ArrayList<>();
+        _scrapListByDate.getValue().stream().filter(data->!data.url.equals(news.url)).forEach(list::add);
+        _scrapListByDate.setValue(list);
+        filterScrapList();
+        NewsScrapBody body = new NewsScrapBody(PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,""),news.url,news.category);
+        new HttpRequestUtil().setURL(LoginViewModel.BACKEND_URL + "news/scrap/delete").setPostBody(body).setOnSuccessListener((response)->{
+        }).enableDebug().request();
+    }
 
 
     public static String newsUrl = "https://newsapi.org/";

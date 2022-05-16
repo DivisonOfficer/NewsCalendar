@@ -19,7 +19,21 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@color/primary"
+            android:visibility="@{news.category != null ? View.GONE : View.VISIBLE}"
             android:src="@drawable/ic_store_docs"
+            android:paddingVertical="24dp"
+            app:layout_constraintTop_toTopOf="@id/ll_plan"
+            app:layout_constraintBottom_toBottomOf="@id/ll_plan"
+            android:paddingHorizontal="24dp"
+            app:tint="@color/appBackground" />
+        <ImageView
+            android:id="@+id/ic_delete"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:visibility="@{news.category == null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/error"
+            android:src="@drawable/ic_trash"
             android:paddingVertical="24dp"
             app:layout_constraintTop_toTopOf="@id/ll_plan"
             app:layout_constraintBottom_toBottomOf="@id/ll_plan"
@@ -45,13 +59,14 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="18dp"
                     android:src="@drawable/ic_oval"
+                    android:visibility="@{news.category != null ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
 
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -59,11 +74,11 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/ibm_plex_sans_light"
                     android:gravity="center_horizontal|top"
-                    android:text="@{news.dateString}"
+                    android:text="@{news.category != null ? news.category :news.dateString}"
                     android:textColor="@color/secondaryText"
-                    app:layout_constraintBottom_toBottomOf="@+id/ic_category"
+                    android:layout_marginTop="13dp"
                     app:layout_constraintStart_toEndOf="@+id/ic_category"
-                    app:layout_constraintTop_toTopOf="@+id/ic_category"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="14:00" />
 
                 <ImageView
@@ -93,8 +108,9 @@
                     android:text="@{news.title}"
                     android:textColor="@color/primaryText"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/ic_category"
-                    app:layout_constraintTop_toBottomOf="@+id/ic_category"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_date"
                     tools:text="안드로이드 프로젝트 발표" />
 
                 <TextView
@@ -116,7 +132,7 @@
                     android:layout_marginBottom="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/ic_category"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     tools:text="슬라이드 16쪽부터 시작" />
 

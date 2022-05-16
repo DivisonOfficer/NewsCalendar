@@ -50,14 +50,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         newsAdapter.setRecyclerView(binding.rvHeadlines);
         binding.setAdapter(adapter);
         binding.setNewsAdapter(newsAdapter);
-        newsAdapter.setScrapListener(data->{
-            viewModel.setDataOnScrap(data);
-            showScrap();
-        });
+
         scrapAdapter.setRecyclerView(binding.rvNews);
         binding.setScrapAdapter(scrapAdapter);
         binding.setLifecycleOwner(this);
         binding.setViewmodel(viewModel);
+        setSlide();
         setLinkClick();
         setOnClick();
         setOnScrap();
@@ -65,13 +63,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setBottomClick();
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(this::setViewSlider);
         viewModel.getDailyNews();
+        viewModel.getScrapData();
 
     }
 
-
+    private void setSlide(){
+        newsAdapter.setScrapListener(data->{
+            viewModel.setDataOnScrap(data);
+            showScrap();
+        });
+        scrapAdapter.setScrapListener(viewModel::deleteScrap);
+    }
 
     private void setLinkClick(){
         newsAdapter.setLinkClick(news->{
+            openWebView(news.title,news.url);
+        });
+        scrapAdapter.setLinkClick(news->{
             openWebView(news.title,news.url);
         });
     }
@@ -127,7 +135,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         viewModel.scrapListByMonth().observe(this,list->{
             Log.d("MainActivity","Scrapped dat " + list.size());
             ArrayList<Pair<Integer,String>> ovals = new ArrayList<>();
-            list.stream().map(data-> new Pair<Integer,String>(data.day(), data.localCategory)).forEach(ovals::add);
+            list.stream().map(data-> new Pair<>(data.day(), data.category)).forEach(ovals::add);
             adapter.setOvals(ovals);
         });
         viewModel.scrapListByDate().observe(this,list->{
@@ -153,6 +161,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             viewModel.previousMonth();
         }
     }
+
 
     private void showScrap(){
         scrapDialog.show(getSupportFragmentManager(),scrapDialog.getTag());

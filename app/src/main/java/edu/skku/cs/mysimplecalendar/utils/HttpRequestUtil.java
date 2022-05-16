@@ -96,15 +96,15 @@ public class HttpRequestUtil implements Runnable {
         Request request = builder.build();
         Response response;
         try {
-            if(debug) Log.d("HTTPRequestUtil","POST : "+url);
-            if(debug) Log.d("HttpRequestUtil",json);
+            if(debug) Log.d(Tag,"POST : "+url);
+            if(debug) Log.d(Tag,json);
             response = client.newCall(request).execute();
             if(response.isSuccessful())
             {
                 runOnSuccess(response);
             }
             else{
-                if(debug) Log.d("HTTPRequestUtil","Response : "+response.code());
+                if(debug) Log.d(Tag,"Response : "+response.code());
                 if(onFailedListener != null) runOnFailed(response.code());
             }
         } catch (IOException e) {
@@ -123,7 +123,7 @@ public class HttpRequestUtil implements Runnable {
             url += param.first + "=" + param.second;
 
         }
-        if(debug)Log.d("HttpRequest","Request : get " +url);
+        if(debug)Log.d(Tag,"Request : get " +url);
 
         Request.Builder builder = new Request.Builder().url(url).get();
         Request request = builder.build();
@@ -138,7 +138,7 @@ public class HttpRequestUtil implements Runnable {
                 runOnSuccess(response);
             }
             else{
-                if(debug) Log.d("HTTPRequestUtil","Response : "+response.code());
+                if(debug) Log.d(Tag,"Response : "+response.code());
                 if(onFailedListener != null) runOnFailed(response.code());
             }
         } catch (IOException e) {
@@ -162,6 +162,6 @@ public class HttpRequestUtil implements Runnable {
         void onFailed(Integer code);
     }
 
-
+    private static final String Tag = "HTTP LOG";
     static OkHttpClient client = null;
 }

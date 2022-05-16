@@ -58,7 +58,7 @@ public class GridIconAdapter extends RecyclerView.Adapter<GridIconAdapter.ViewHo
             }
             if(idx >= arr.length) idx = 0;
             binding.icOval.setColorFilter(context.getResources().getIntArray(R.array.item_color)[idx]);
-            Log.d("Ovals","Bind plan cateogry" +category + idx);
+            Log.d("Ovals","Bind plan category" +category + idx);
         }
     }
 

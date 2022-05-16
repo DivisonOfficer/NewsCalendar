@@ -81,7 +81,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                    onClick.setCurrentDate(day);
                 });
             }
-            else binding.getRoot().setOnClickListener(null);
+            else {
+                binding.getRoot().setOnClickListener(null);
+                binding.setCurrentDate(false);
+            }
         }
 
     }
