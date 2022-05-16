@@ -3,6 +3,14 @@
 
 오늘의 뉴스를 스크랩하는 캘린더를 만들어보자
 
+## Build Configure
+
+<img src="https://img.shields.io/badge/CompiledSdk-31-f39f37">
+<img src="https://img.shields.io/badge/TargetSdk-31-f39f37">
+<img src="https://img.shields.io/badge/MinimumSdk-26-f39f37">
+<img src="https://img.shields.io/badge/Windows-10-4791FF"> <img src="https://img.shields.io/badge/AndroidStudio-Bumblebee-e9b033">
+<img src="https://img.shields.io/badge/JAVA-C82025">
+
 
 
 # app dev page
