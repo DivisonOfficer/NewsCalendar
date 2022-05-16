@@ -87,13 +87,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         viewModel.currentDay().observe(this, day->{
             adapter.setCurrentDate(day);
         });
-        viewModel.currentYear().observe(this,year->{
-            adapter.setYear(year);
-            binding.setYear(String.valueOf(year) + "년");
-        });
         viewModel.currentMonth().observe(this,month->{
             adapter.setMonth(month);
-            binding.setMonth(String.valueOf(month) + "월");
+            binding.setMonth(getResources().getStringArray(R.array.month_string)[month - 1]);
         });
         viewModel.newsList().observe(this,list->{
             newsAdapter.updateList(list);

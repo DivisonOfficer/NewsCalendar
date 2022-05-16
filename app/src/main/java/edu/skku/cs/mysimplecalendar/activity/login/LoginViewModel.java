@@ -10,6 +10,7 @@ import edu.skku.cs.mysimplecalendar.R;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.StatusBody;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.UserBody;
 import edu.skku.cs.mysimplecalendar.utils.HttpRequestUtil;
+import edu.skku.cs.mysimplecalendar.utils.PreferenceUtil;
 
 public class LoginViewModel extends ViewModel {
 
@@ -45,6 +46,10 @@ public class LoginViewModel extends ViewModel {
                 StatusBody body = new Gson().fromJson(response, StatusBody.class);
                 if (body.success) {
                     _messageCode.setValue(CODE_SUCCESS_LOGIN);
+                    PreferenceUtil.instance.putString(PreferenceUtil.USER_ID,username);
+                    PreferenceUtil.instance.putString(PreferenceUtil.USER_PASSWD,password);
+
+
                 } else {
                     _messageCode.setValue(CODE_FAILED_LOGIN);
                 }
@@ -77,6 +82,8 @@ public class LoginViewModel extends ViewModel {
                 StatusBody body = new Gson().fromJson(response, StatusBody.class);
                 if (body.success) {
                     _messageCode.setValue(CODE_SUCCESS_REGISTER);
+                    PreferenceUtil.instance.putString(PreferenceUtil.USER_ID,username);
+                    PreferenceUtil.instance.putString(PreferenceUtil.USER_PASSWD,password);
                 } else {
                     _messageCode.setValue(CODE_FAILED_REGISTER);
                 }

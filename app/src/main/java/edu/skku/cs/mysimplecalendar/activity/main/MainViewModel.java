@@ -15,7 +15,9 @@ import edu.skku.cs.mysimplecalendar.activity.login.LoginViewModel;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsData;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsPostBody;
 import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsResponse;
+import edu.skku.cs.mysimplecalendar.datamodels.remote.NewsScrapBody;
 import edu.skku.cs.mysimplecalendar.utils.HttpRequestUtil;
+import edu.skku.cs.mysimplecalendar.utils.PreferenceUtil;
 
 public class MainViewModel extends ViewModel {
 
@@ -53,6 +55,10 @@ public class MainViewModel extends ViewModel {
     {
         _currentDay.setValue(day);
     }
+
+    private final MutableLiveData<Integer> _layoutMode = new MutableLiveData<>(LAYOUT_SCRAP);
+
+    public LiveData<Integer> layoutMode(){ return _layoutMode;}
 
 
 
@@ -117,9 +123,18 @@ public class MainViewModel extends ViewModel {
         }).enableDebug().request();
     }
 
+    public void scrapNews(NewsData news, String category)
+    {
+        NewsScrapBody body = new NewsScrapBody(PreferenceUtil.instance.getString(PreferenceUtil.USER_ID,""),news.url,category);
+    }
 
 
     public static String newsUrl = "https://newsapi.org/";
     public static String newsApiKey = "448661a0dc1e4bc1bbd84f215553424b";
     public static String topHeadLine = "v2/top-headlines";
+
+    public final static Integer LAYOUT_SCRAP = 0;
+    public final static Integer LAYOUT_HEADLINE = 1;
+    public final static Integer LAYOUT_NEWS_CALENDAR = 2;
+    public final static Integer LAYOUT_MYPAGE = 3;
 }

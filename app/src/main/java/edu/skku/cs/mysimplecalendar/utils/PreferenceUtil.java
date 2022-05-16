@@ -45,6 +45,9 @@ public class PreferenceUtil {
 
     public static final String PREFS_FILE = "NEWS_APP_PREFS";
 
+    public static final String USER_ID = "userId";
+    public static final String USER_PASSWD = "passwd";
+
 
 
 }

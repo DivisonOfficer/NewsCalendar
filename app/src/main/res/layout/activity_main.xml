@@ -8,11 +8,17 @@
             type="String"
             android:value="September"/>
         <variable
-            name="year"
-            type="String" />
+            name="viewmodel"
+            type="edu.skku.cs.mysimplecalendar.activity.main.MainViewModel" />
         <variable
             name="newsAdapter"
             type="androidx.recyclerview.widget.RecyclerView.Adapter"/>
+        <variable
+            name="scrapAdapter"
+            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
+        <variable
+            name="oldNewsAdapter"
+            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
         <variable
             name="adapter"
             type="androidx.recyclerview.widget.RecyclerView.Adapter" />
@@ -96,7 +102,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="top"
                 android:lineSpacingExtra="2sp"
-                android:text="@{year, default = 2021}"
+                android:text="@{viewmodel.currentYear().toString(), default = 2021}"
                 android:textColor="@color/secondaryText"
                 android:translationY="-0.84sp"
                 app:layout_constraintEnd_toEndOf="parent"
