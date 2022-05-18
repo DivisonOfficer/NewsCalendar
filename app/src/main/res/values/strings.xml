@@ -16,6 +16,7 @@
     <string name="str_btn_confirm">완료</string>
     <string name="str_url_backend">https://q491o8k8da.execute-api.ap-northeast-2.amazonaws.com/dev/</string>
     <string name="str_today_headline">오늘의 헤드라인</string>
+    <string name="str_null_news">이날은 기사가 없어요</string>
 
     <string-array name="default_category">
         <item>정치</item>

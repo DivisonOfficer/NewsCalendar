@@ -175,6 +175,26 @@
                     android:adapter="@{viewmodel.layoutMode() == MainViewModel.LAYOUT_NEWS_CALENDAR ? oldNewsAdapter : scrapAdapter}"
                     android:orientation="vertical"
                     app:layoutManager=".utils.ScrollControlLinear" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/str_null_news"
+                    android:textColor="@color/primaryText"
+                    android:fontFamily="@font/ibm_plex_sans_medium"
+                    android:textSize="14sp"
+                    android:includeFontPadding="false"
+                    android:visibility="@{viewmodel.layoutMode() == MainViewModel.LAYOUT_SCRAP &amp;&amp; adapter.itemCount == 0 ? View.VISIBLE : View.GONE}"
+                    android:gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/str_null_news"
+                    android:textColor="@color/primaryText"
+                    android:fontFamily="@font/ibm_plex_sans_medium"
+                    android:textSize="14sp"
+                    android:includeFontPadding="false"
+                    android:visibility="@{viewmodel.layoutMode() == MainViewModel.LAYOUT_NEWS_CALENDAR &amp;&amp; oldNewsAdapter.itemCount == 0 ? View.VISIBLE : View.GONE}"
+                    android:gravity="center"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -213,6 +233,7 @@
                 app:layoutManager=".utils.ScrollControlLinear"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_headlines" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bt_nav"
